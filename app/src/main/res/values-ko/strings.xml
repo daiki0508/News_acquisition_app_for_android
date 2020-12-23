@@ -1,0 +1,33 @@
+<resources>
+    <string name="app_name">뉴스 애플 리케이션</string>
+    <string name="search_conditions_text">검색 조건을 입력하십시오</string>
+    <string name="search_conditions1">지역</string>
+    <string-array name="conditions_area">
+        <item>한국</item>
+        <item>미국</item>
+        <item>중국</item>
+        <item>일본</item>
+        <item>러시아</item>
+    </string-array>
+    <string name="search_conditions2">언어</string>
+    <string-array name="conditions_lang">
+        <item>한국</item>
+        <item>영어</item>
+        <item>중국</item>
+        <item>일본어</item>
+        <item>러시아어</item>
+    </string-array>
+    <string name="search_conditions3">검색어</string>
+    <string name="execute_text">검색 실행</string>
+    <string name="result_text">뉴스 목록</string>
+    <string name="dialog_title">선택</string>
+    <string-array name="select_dialog">
+        <item>브라우저에서 열기</item>
+        <item>트위터에서 공유하기</item>
+    </string-array>
+    <string name="twitter_describe">기사와 함께 트윗하는 문장이 있으면 입력하십시오.</string>
+    <string name="tweet_btn">트윗하기</string>
+    <string name="no_tweet_app">Twitter 공식 앱을 찾을 수 없습니다</string>
+    <string name="tweet_app_install">설치</string>
+    <string name="playStore_url" translatable="false">http://play.google.com/store/apps/details?id=com.twitter.android</string>
+</resources>

@@ -1,0 +1,33 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">Приложение новостей</string>
+    <string name="search_conditions_text">Пожалуйста, введите условия поиска</string>
+    <string name="search_conditions1">площадь</string>
+    <string-array name="conditions_area">
+        <item>Россия</item>
+        <item>Америка</item>
+        <item>Китай</item>
+        <item>Корея</item>
+        <item>Япония</item>
+    </string-array>
+    <string name="search_conditions2">язык</string>
+    <string-array name="conditions_lang">
+        <item>русский</item>
+        <item>английский</item>
+        <item>китайский язык</item>
+        <item>корейский язык</item>
+        <item>Японский</item>
+    </string-array>
+    <string name="search_conditions3">Искать термин</string>
+    <string name="execute_text">Выполнение поиска</string>
+    <string name="result_text">список новостей</string>
+    <string name="dialog_title">Выбор</string>
+    <string-array name="select_dialog">
+        <item>Открыть в браузере</item>
+        <item>Поделиться в Twitter</item>
+    </string-array>
+    <string name="twitter_describe">Если у вас есть предложение написать статью в Твиттере, введите его.</string>
+    <string name="tweet_btn">Твитнуть</string>
+    <string name="no_tweet_app">Официальное приложение Twitter не найдено</string>
+    <string name="tweet_app_install">установить</string>
+    <string name="playStore_url" tools:ignore="ExtraTranslation" translatable="false">http://play.google.com/store/apps/details?id=com.twitter.android</string>
+</resources>

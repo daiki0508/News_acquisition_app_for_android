@@ -1,0 +1,33 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">NewsApp</string>
+    <string name="search_conditions_text">Please enter search conditions</string>
+    <string name="search_conditions1">Area</string>
+    <string-array name="conditions_area">
+        <item>America</item>
+        <item>Japan</item>
+        <item>China</item>
+        <item>Korea</item>
+        <item>Russia</item>
+    </string-array>
+    <string name="search_conditions2">Language</string>
+    <string-array name="conditions_lang">
+        <item>English</item>
+        <item>Japanese</item>
+        <item>Chinese</item>
+        <item>Korean</item>
+        <item>Russian</item>
+    </string-array>
+    <string name="search_conditions3">Search words</string>
+    <string name="execute_text">Execute Search</string>
+    <string name="result_text">News List</string>
+    <string name="dialog_title">Select</string>
+    <string-array name="select_dialog">
+        <item>Open in browser</item>
+        <item>Share on Twitter</item>
+    </string-array>
+    <string name="twitter_describe">If you have a sentence to tweet with the article, please enter it.</string>
+    <string name="tweet_btn">Tweet</string>
+    <string name="no_tweet_app">Twitter official app not found</string>
+    <string name="tweet_app_install">Install</string>
+    <string name="playStore_url" tools:ignore="ExtraTranslation" translatable="false">http://play.google.com/store/apps/details?id=com.twitter.android</string>
+</resources>
