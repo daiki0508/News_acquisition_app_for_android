@@ -1,8 +1,12 @@
 package com.websarva.wings.android.newsapp;
 
-public class CodesClass {
-    CodesClass(){
+import android.content.Context;
+import android.widget.Toast;
 
+public class CodesClass {
+    private final Context con;
+    CodesClass(Context context){
+        this.con = context;
     }
     String[] Code(String outputLang, String area, String lang) {
         String[] codes = new String[2];
@@ -179,7 +183,7 @@ public class CodesClass {
         return codes;
     }
 
-    String NoWordError(String outputLang) {
+    void NoWordError(String outputLang) {
         String show = "";
         switch (outputLang) {
             case "NewsApp":
@@ -197,6 +201,7 @@ public class CodesClass {
             default:
                 show = "検索用語が入力されていません";
         }
-        return show;
+        // Toastの表示
+        Toast.makeText(con,show,Toast.LENGTH_LONG).show();
     }
 }
