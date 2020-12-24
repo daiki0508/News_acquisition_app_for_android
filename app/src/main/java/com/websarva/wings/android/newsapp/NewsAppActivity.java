@@ -95,8 +95,7 @@ public class NewsAppActivity extends AppCompatActivity {
             try {
                 // サブクラスHttpRequestClassの独自関数(httpRequest)に処理を飛ばす
                 // 第１引数にURL、第２引数に結果を表示する場所を指定
-               // hrc.httpRequest("https://google-news.p.rapidapi.com/v1/topic_headlines?country="+codes[0]+"&lang="+codes[1]+"&topic="+word,_ResultNews);
-                hrc.httpRequest("http://153.127.20.38/index.php",_ResultNews);
+                hrc.httpRequest("https://google-news.p.rapidapi.com/v1/topic_headlines?country="+codes[0]+"&lang="+codes[1]+"&topic="+word,_ResultNews);
                 Log.d("test",codes[0]);
                 Log.d("test",codes[1]);
             }catch (Exception e){

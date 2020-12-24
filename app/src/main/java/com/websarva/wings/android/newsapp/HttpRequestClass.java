@@ -39,9 +39,9 @@ public class HttpRequestClass extends Activity {
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
                 .url(url)
-                //   .get()
-                //   .addHeader("x-rapidapi-host", "google-news.p.rapidapi.com")
-                //   .addHeader("x-rapidapi-key", "YOUR_API_KEY")
+                .get()
+                .addHeader("x-rapidapi-host", "google-news.p.rapidapi.com")
+                .addHeader("x-rapidapi-key", "YOUR_API_KEY")
                 .build();
 
         // 非同期処理
