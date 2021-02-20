@@ -29,5 +29,63 @@
     <string name="tweet_btn">Tweet</string>
     <string name="no_tweet_app">Twitter official app not found</string>
     <string name="tweet_app_install">Install</string>
-    <string name="playStore_url" tools:ignore="ExtraTranslation" translatable="false">http://play.google.com/store/apps/details?id=com.twitter.android</string>
+    <string name="playStore_url" translatable="false" tools:ignore="ExtraTranslation">http://play.google.com/store/apps/details?id=com.twitter.android</string>
+
+    <string name="NewsScreen" tools:ignore="MissingTranslation">News</string>
+    <string name="WeatherScreen" tools:ignore="MissingTranslation">Weather</string>
+    <string name="weather_text_introduction" tools:ignore="MissingTranslation">You can get the weather information.</string>
+    <string-array name="prefectures">
+        <item>Hokkaido</item>
+        <item>Aomori</item>
+        <item>Iwate</item>
+        <item>Miyagi</item>
+        <item>Akita</item>
+        <item>Yamagata</item>
+        <item>Fukushima</item>
+        <item>Ibaraki</item>
+        <item>Tochigi</item>
+        <item>Gunma</item>
+        <item>Saitama</item>
+        <item>Chiba</item>
+        <item>Tokyo</item>
+        <item>Kanagawa</item>
+        <item>Niigata</item>
+        <item>Toyama</item>
+        <item>Ishikawa</item>
+        <item>Fukui</item>
+        <item>Yamanashi</item>
+        <item>Nagano</item>
+        <item>Gifu</item>
+        <item>Shizuoka</item>
+        <item>Aichi</item>
+        <item>Mie</item>
+        <item>Shiga</item>
+        <item>Kyoto</item>
+        <item>Osaka</item>
+        <item>Hyogo</item>
+        <item>Nara</item>
+        <item>Wakayama</item>
+        <item>Tottori</item>
+        <item>Shimane</item>
+        <item>Okayama</item>
+        <item>Hiroshima</item>
+        <item>Yamaguchi</item>
+        <item>Tokushima</item>
+        <item>Kagawa</item>
+        <item>Ehime</item>
+        <item>Kochi</item>
+        <item>Fukuoka</item>
+        <item>Saga</item>
+        <item>Nagasaki</item>
+        <item>Kumamoto</item>
+        <item>Oita</item>
+        <item>Miyazaki</item>
+        <item>Kagoshima</item>
+        <item>Okinawa</item>
+    </string-array>
+    <string name="weather_information" translatable="false">Weather information</string>
+    <string name="weather_weather" translatable="false">Weather</string>
+    <string name="max_temperature" translatable="false">Max：</string>
+    <string name="min_temperature" translatable="false">Min：</string>
+    <string name="today_min" translatable="false">UnKnown</string>
 </resources>

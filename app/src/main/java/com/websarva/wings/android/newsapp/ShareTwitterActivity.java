@@ -2,6 +2,7 @@ package com.websarva.wings.android.newsapp;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.text.InputFilter;
 import android.util.Log;
@@ -33,6 +34,10 @@ public class ShareTwitterActivity extends AppCompatActivity {
         InputFilter [] filters = new InputFilter[1];
         int maxLength = 140 - url.length();
         TextView length_view = findViewById(R.id.edit_length);
+        if(length_view == null){
+            length_view = findViewById(R.id.edit_length_tablet);
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        }
         length_view.setText("入力可能文字数は"+maxLength+"です");
         filters[0] = new InputFilter.LengthFilter(maxLength);
         sentence_input = findViewById(R.id.editText_share_message);

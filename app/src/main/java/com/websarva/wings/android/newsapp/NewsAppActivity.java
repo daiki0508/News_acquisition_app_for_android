@@ -4,9 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
@@ -24,6 +28,8 @@ public class NewsAppActivity extends AppCompatActivity {
     // 別クラスの定義
     private CodesClass cc;
     private HttpRequestClass hrc;
+    // Intentの定義
+    private Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +37,10 @@ public class NewsAppActivity extends AppCompatActivity {
         setContentView(R.layout.news_app_activity);
         // リスナを設定
         _ResultNews = findViewById(R.id.result_news_text2);
+        if (_ResultNews == null){
+            _ResultNews = findViewById(R.id.result_news_text2_tablet);
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        }
         _ResultNews.setOnItemClickListener(new ListItemClickListener());
 
         // Contextの設定
@@ -56,7 +66,6 @@ public class NewsAppActivity extends AppCompatActivity {
     // SelectDialogFragmentクラスで渡された結果が格納される
     public void onFragmentResult(boolean selectFlag){
         Log.d("test3", String.valueOf(selectFlag));
-        Intent intent;
         // flagの値によって処理を分岐
         if (selectFlag){
             intent = new Intent(Intent.ACTION_VIEW, uri);
@@ -95,12 +104,33 @@ public class NewsAppActivity extends AppCompatActivity {
             try {
                 // サブクラスHttpRequestClassの独自関数(httpRequest)に処理を飛ばす
                 // 第１引数にURL、第２引数に結果を表示する場所を指定
-                hrc.httpRequest("https://google-news.p.rapidapi.com/v1/topic_headlines?country="+codes[0]+"&lang="+codes[1]+"&topic="+word,_ResultNews);
+                hrc.httpRequest("https://google-news.p.rapidapi.com/v1/topic_headlines?country="+codes[0]+"&lang="+codes[1]+"&topic="+word,_ResultNews,0);
                 Log.d("test",codes[0]);
                 Log.d("test",codes[1]);
             }catch (Exception e){
                 Log.e("test",e.getMessage());
             }
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        // メニューインフレ―ターの取得
+        MenuInflater inflater = getMenuInflater();
+        // オプションメニュー用.xmlファイルのをインフレート
+        inflater.inflate(R.menu.menu_options_menu_list,menu);
+        // 親クラスの同値メソッドを呼び出し戻り値を返却
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        int itemId = item.getItemId();
+        if (itemId == R.id.WeatherScreen){
+            intent = new Intent(NewsAppActivity.this,WeatherAppActivity.class);
+            startActivity(intent);
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

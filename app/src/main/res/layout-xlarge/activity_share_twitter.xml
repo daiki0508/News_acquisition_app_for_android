@@ -10,34 +10,36 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/twitter_describe"
-        android:textSize="25sp" />
+        android:textSize="30sp" />
+
     <EditText
+        android:id="@+id/editText_share_message"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textMultiLine"
-        android:gravity="start|top"
-        android:padding="8dp"
+        android:layout_height="442dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="16dp"
+        android:background="#d3d3d3"
         android:ems="10"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:gravity="start|top"
+        android:inputType="textMultiLine"
+        android:lines="10"
+        android:padding="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:id="@+id/editText_share_message"
-        app:layout_constraintVertical_bias="0.40"
-        android:layout_marginTop="40dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:lines="10"
-        android:background="#d3d3d3" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.40" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/edit_length"
-        android:layout_marginTop="5dp"
+        android:id="@+id/edit_length_tablet"
+        android:layout_marginTop="10dp"
         android:layout_gravity="right"
+        android:layout_marginEnd="5dp"
         android:text="test"
-        android:textSize="15sp" />
+        android:textSize="20sp" />
 
     <Button
         android:layout_width="wrap_content"

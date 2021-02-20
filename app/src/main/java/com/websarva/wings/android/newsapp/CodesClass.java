@@ -1,6 +1,7 @@
 package com.websarva.wings.android.newsapp;
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.Toast;
 
 public class CodesClass {
@@ -203,5 +204,25 @@ public class CodesClass {
         }
         // Toastの表示
         Toast.makeText(con,show,Toast.LENGTH_LONG).show();
+    }
+    String cityCode(int selected_id){
+        String ret_id = "";
+        selected_id +=1;
+        if (selected_id == 1){
+            ret_id = "016010";
+        }else if (selected_id > 1 && selected_id < 11){
+            ret_id = "0" + selected_id + "0010";
+        }else if (selected_id >11 && selected_id < 21){
+            ret_id = "1" + selected_id + "0010";
+        }else if (selected_id > 21 && selected_id < 31){
+            ret_id = "2" + selected_id + "0010";
+        }else if (selected_id > 31 && selected_id <41){
+            ret_id ="3" + selected_id + "0010";
+        }else if (selected_id > 41 && selected_id < 47){
+            ret_id = "4"+ selected_id + "0010";
+        }else if (selected_id == 47){
+            ret_id = "471010";
+        }
+        return ret_id;
     }
 }
