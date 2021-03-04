@@ -1,19 +1,9 @@
 package com.websarva.wings.android.newsapp;
 
-import android.app.Activity;
 import android.content.Context;
-import android.os.Handler;
-import android.os.Looper;
 import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.Spinner;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -24,7 +14,6 @@ import okhttp3.Callback;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import okhttp3.internal.http2.Http2Reader;
 
 import static java.util.Objects.requireNonNull;
 

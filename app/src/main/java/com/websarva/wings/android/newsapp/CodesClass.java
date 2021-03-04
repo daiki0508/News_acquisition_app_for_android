@@ -1,7 +1,6 @@
 package com.websarva.wings.android.newsapp;
 
 import android.content.Context;
-import android.util.Log;
 import android.widget.Toast;
 
 public class CodesClass {
