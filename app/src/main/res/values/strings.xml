@@ -83,6 +83,14 @@
         <item>Kagoshima</item>
         <item>Okinawa</item>
     </string-array>
+    <string name="choose_language">Language</string>
+    <string-array name="use_language">
+        <item>Japanese</item>
+        <item>English</item>
+        <item>Korea</item>
+        <item>Russia</item>
+        <item>Chinese</item>
+    </string-array>
     <string name="weather_information" translatable="false">Weather information</string>
     <string name="weather_weather" translatable="false">Weather</string>
     <string name="max_temperature" translatable="false">Max：</string>

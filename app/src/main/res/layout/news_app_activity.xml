@@ -73,6 +73,13 @@
         android:layout_height="wrap_content"
         android:text="@string/execute_text"
         android:onClick="executeButton" />
+    <ProgressBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressbar"
+        android:layout_marginTop="10dp"
+        android:indeterminate="false"
+        style="@android:style/Widget.ProgressBar.Horizontal" />
 
     <TextView
         android:layout_width="match_parent"

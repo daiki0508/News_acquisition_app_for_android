@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import java.util.Map;
 
@@ -30,6 +31,7 @@ public class NewsAppActivity extends AppCompatActivity {
     private HttpRequestClass hrc;
     // Intentの定義
     private Intent intent;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,9 +48,10 @@ public class NewsAppActivity extends AppCompatActivity {
         // Contextの設定
         Context context = getApplicationContext();
         cc = new CodesClass(context);
-        Context context1 = getApplicationContext();
-        hrc = new HttpRequestClass(context1);
+        hrc = new HttpRequestClass(this);
 
+        progressBar = findViewById(R.id.progressbar);
+        progressBar.setVisibility(ProgressBar.INVISIBLE);
     }
 
     // タップした記事のURLを保持し、Dialogを起動する関数に処理を渡す
@@ -104,7 +107,8 @@ public class NewsAppActivity extends AppCompatActivity {
             try {
                 // サブクラスHttpRequestClassの独自関数(httpRequest)に処理を飛ばす
                 // 第１引数にURL、第２引数に結果を表示する場所を指定
-                hrc.httpRequest("https://google-news.p.rapidapi.com/v1/topic_headlines?country="+codes[0]+"&lang="+codes[1]+"&topic="+word,_ResultNews,0);
+                progressBar.setVisibility(ProgressBar.VISIBLE);
+                hrc.httpRequest("https://google-news.p.rapidapi.com/v1/topic_headlines?country="+codes[0]+"&lang="+codes[1]+"&topic="+word,_ResultNews,0,0);
                 Log.d("test",codes[0]);
                 Log.d("test",codes[1]);
             }catch (Exception e){

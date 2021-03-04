@@ -225,4 +225,26 @@ public class CodesClass {
         }
         return ret_id;
     }
+
+    String langCode(int selected_id2){
+        String ret_id = "";
+        switch (selected_id2){
+            case 0:
+                ret_id = "ja";
+                break;
+            case 1:
+                ret_id = "en";
+                break;
+            case 2:
+                ret_id = "ko";
+                break;
+            case 3:
+                ret_id = "ru";
+                break;
+            case 4:
+                ret_id = "zh";
+                break;
+        }
+        return ret_id;
+    }
 }

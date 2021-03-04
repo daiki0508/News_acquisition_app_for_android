@@ -30,4 +30,62 @@
     <string name="no_tweet_app">Официальное приложение Twitter не найдено</string>
     <string name="tweet_app_install">установить</string>
     <string name="playStore_url" tools:ignore="ExtraTranslation" translatable="false">http://play.google.com/store/apps/details?id=com.twitter.android</string>
+
+    <string-array name="prefectures">
+        <item>Hokkaido</item>
+        <item>Aomori</item>
+        <item>Iwate</item>
+        <item>Miyagi</item>
+        <item>Akita</item>
+        <item>Yamagata</item>
+        <item>Fukushima</item>
+        <item>Ibaraki</item>
+        <item>Tochigi</item>
+        <item>Gunma</item>
+        <item>Saitama</item>
+        <item>Chiba</item>
+        <item>Tokyo</item>
+        <item>Kanagawa</item>
+        <item>Niigata</item>
+        <item>Toyama</item>
+        <item>Ishikawa</item>
+        <item>Fukui</item>
+        <item>Yamanashi</item>
+        <item>Nagano</item>
+        <item>Gifu</item>
+        <item>Shizuoka</item>
+        <item>Aichi</item>
+        <item>Mie</item>
+        <item>Shiga</item>
+        <item>Kyoto</item>
+        <item>Osaka</item>
+        <item>Hyogo</item>
+        <item>Nara</item>
+        <item>Wakayama</item>
+        <item>Tottori</item>
+        <item>Shimane</item>
+        <item>Okayama</item>
+        <item>Hiroshima</item>
+        <item>Yamaguchi</item>
+        <item>Tokushima</item>
+        <item>Kagawa</item>
+        <item>Ehime</item>
+        <item>Kochi</item>
+        <item>Fukuoka</item>
+        <item>Saga</item>
+        <item>Nagasaki</item>
+        <item>Kumamoto</item>
+        <item>Oita</item>
+        <item>Miyazaki</item>
+        <item>Kagoshima</item>
+        <item>Okinawa</item>
+    </string-array>
+    <string name="choose_language">Language</string>
+    <string-array name="use_language">
+        <item>Japanese</item>
+        <item>English</item>
+        <item>Korea</item>
+        <item>Russia</item>
+        <item>Chinese</item>
+    </string-array>
 </resources>
