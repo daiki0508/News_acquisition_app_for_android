@@ -31,6 +31,10 @@
     <string name="tweet_app_install">установить</string>
     <string name="playStore_url" tools:ignore="ExtraTranslation" translatable="false">http://play.google.com/store/apps/details?id=com.twitter.android</string>
 
+    <string name="NewsScreen">Новости</string>
+    <string name="WeatherScreen" >Погода</string>
+    <string name="weather_text_introduction">Вы можете получить информацию о погоде</string>
+
     <string-array name="prefectures">
         <item>Hokkaido</item>
         <item>Aomori</item>
@@ -80,12 +84,17 @@
         <item>Kagoshima</item>
         <item>Okinawa</item>
     </string-array>
-    <string name="choose_language">Language</string>
+    <string name="choose_language">язык</string>
     <string-array name="use_language">
-        <item>Japanese</item>
-        <item>English</item>
-        <item>Korea</item>
-        <item>Russia</item>
-        <item>Chinese</item>
+        <item>Японский</item>
+        <item>английский язык</item>
+        <item>Корейский</item>
+        <item>русский</item>
+        <item>Китайский</item>
     </string-array>
+    <string name="weather_information">Информация о погоде</string>
+    <string name="weather_weather">Погода</string>
+    <string name="max_temperature">Максимум：</string>
+    <string name="min_temperature">Мин：</string>
+    <string name="today_min">Неизвестный</string>
 </resources>

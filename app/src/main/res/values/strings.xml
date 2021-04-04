@@ -31,9 +31,9 @@
     <string name="tweet_app_install">Install</string>
     <string name="playStore_url" translatable="false" tools:ignore="ExtraTranslation">http://play.google.com/store/apps/details?id=com.twitter.android</string>
 
-    <string name="NewsScreen" tools:ignore="MissingTranslation">News</string>
-    <string name="WeatherScreen" tools:ignore="MissingTranslation">Weather</string>
-    <string name="weather_text_introduction" tools:ignore="MissingTranslation">You can get the weather information.</string>
+    <string name="NewsScreen">News</string>
+    <string name="WeatherScreen" >Weather</string>
+    <string name="weather_text_introduction">You can get the weather information.</string>
     <string-array name="prefectures">
         <item>Hokkaido</item>
         <item>Aomori</item>
@@ -91,9 +91,9 @@
         <item>Russia</item>
         <item>Chinese</item>
     </string-array>
-    <string name="weather_information" translatable="false">Weather information</string>
-    <string name="weather_weather" translatable="false">Weather</string>
-    <string name="max_temperature" translatable="false">Max：</string>
-    <string name="min_temperature" translatable="false">Min：</string>
-    <string name="today_min" translatable="false">UnKnown</string>
+    <string name="weather_information">Weather information</string>
+    <string name="weather_weather">Weather</string>
+    <string name="max_temperature">Max：</string>
+    <string name="min_temperature">Min：</string>
+    <string name="today_min">UnKnown</string>
 </resources>

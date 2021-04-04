@@ -31,6 +31,10 @@
     <string name="tweet_app_install">安装</string>
     <string name="playStore_url" tools:ignore="ExtraTranslation" translatable="false">http://play.google.com/store/apps/details?id=com.twitter.android</string>
 
+    <string name="NewsScreen">消息</string>
+    <string name="WeatherScreen" >天气</string>
+    <string name="weather_text_introduction">您可以获得天气信息</string>
+
     <string-array name="prefectures">
         <item>Hokkaido</item>
         <item>Aomori</item>
@@ -80,12 +84,17 @@
         <item>Kagoshima</item>
         <item>Okinawa</item>
     </string-array>
-    <string name="choose_language">Language</string>
+    <string name="choose_language">语言</string>
     <string-array name="use_language">
-        <item>Japanese</item>
-        <item>English</item>
-        <item>Korea</item>
-        <item>Russia</item>
-        <item>Chinese</item>
+        <item>日本人</item>
+        <item>英语</item>
+        <item>韩国人</item>
+        <item>俄语</item>
+        <item>中国人</item>
     </string-array>
+    <string name="weather_information">天气信息</string>
+    <string name="weather_weather">天气</string>
+    <string name="max_temperature">最大限度：</string>
+    <string name="min_temperature">最低限度：</string>
+    <string name="today_min">未知</string>
 </resources>
