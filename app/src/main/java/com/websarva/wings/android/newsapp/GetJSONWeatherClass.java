@@ -11,6 +11,7 @@ import android.widget.SimpleAdapter;
 
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 
@@ -19,176 +20,169 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class GetJSONWeatherClass extends Activity {
+public class GetJSONWeatherClass extends WeatherAppActivity {
     private final Context con;
     private TranslateClass tc;
     private CodesClass cc;
+    private String[] todayData;
+    private String[] tomorrowData;
+    private String[] dayaftertomorrowData;
+    private String[] transData;
+    private SimpleAdapter adapter;
+
     GetJSONWeatherClass(Context context){
         this.con = context;
     }
 
-    void GetJSONWeather(final String jsonStr, ListView _ResultWeather,ProgressBar progressBar, int selected_id2){
-        Log.d("test",jsonStr);
-        final String[] FROM = {"prefecture","dateLabel","telop","max","min","describe"};
-        final int[] TO ={R.id.get_prefecture,R.id.dateLabel,R.id.today_telop,R.id.today_max,R.id.today_min,R.id.weather_describe};
-        List<Map<String,Object>> WeatherList = new ArrayList<>();
+    SimpleAdapter GetJSONWeather(final String jsonStr, int selected_id2) {
+        Log.d("test", jsonStr);
+        final String[] FROM = {"prefecture", "dateLabel", "telop", "max", "min", "describe"};
+        todayData = new String[5];
+        tomorrowData = new String[4];
+        dayaftertomorrowData = new String[4];
+        final int[] TO = {R.id.get_prefecture, R.id.dateLabel, R.id.today_telop, R.id.today_max, R.id.today_min, R.id.weather_describe};
+        List<Map<String, Object>> WeatherList = new ArrayList<>();
 
         try {
             JSONObject rootJSON = new JSONObject(jsonStr);
             JSONArray forecasts = rootJSON.getJSONArray("forecasts");
             JSONObject today = forecasts.getJSONObject(0);
-            String dateLabel = today.getString("dateLabel");
-            String telop = today.getString("telop");
+            todayData[1] = today.getString("dateLabel");
+            todayData[2] = today.getString("telop");
             JSONObject temperature = today.getJSONObject("temperature");
-            String max = "";
             Object max_object = temperature.get("max");
-            if (max_object == JSONObject.NULL){
-                max = con.getResources().getString(R.string.today_min);
-            }else{
-                max = temperature.getJSONObject("max").getString("celsius") +"℃";
+            if (max_object == JSONObject.NULL) {
+                todayData[3] = con.getResources().getString(R.string.today_min);
+            } else {
+                todayData[3] = temperature.getJSONObject("max").getString("celsius") + "℃";
             }
-            String describe = rootJSON.getJSONObject("description").getString("text");
-            String prefecture = rootJSON.getJSONObject("location").getString("prefecture");
+            todayData[4] = rootJSON.getJSONObject("description").getString("text");
+            todayData[0] = rootJSON.getJSONObject("location").getString("prefecture");
 
             JSONObject tomorrow = forecasts.getJSONObject(1);
-            String dateLabel_tomorrow = tomorrow.getString("dateLabel");
-            String telop_tomorrow = tomorrow.getString("telop");
+            tomorrowData[0] = tomorrow.getString("dateLabel");
+            tomorrowData[1] = tomorrow.getString("telop");
             JSONObject temperature_tomorrow = tomorrow.getJSONObject("temperature");
-            String max_tomorrow = "";
             Object max_tomorrow_object = temperature_tomorrow.get("max");
-            if (max_tomorrow_object == JSONObject.NULL){
-                max_tomorrow = con.getResources().getString(R.string.today_min);
-            }else{
-                max_tomorrow = temperature_tomorrow.getJSONObject("max").getString("celsius") + "℃";
+            if (max_tomorrow_object == JSONObject.NULL) {
+                tomorrowData[2] = con.getResources().getString(R.string.today_min);
+            } else {
+                tomorrowData[2] = temperature_tomorrow.getJSONObject("max").getString("celsius") + "℃";
             }
-            String min_tomorrow = "";
             Object min_tomorrow_object = temperature_tomorrow.get("min");
-            if (min_tomorrow_object == JSONObject.NULL){
-                min_tomorrow = con.getResources().getString(R.string.today_min);
-            }else{
-                min_tomorrow = temperature_tomorrow.getJSONObject("min").getString("celsius") + "℃";
+            if (min_tomorrow_object == JSONObject.NULL) {
+                tomorrowData[3] = con.getResources().getString(R.string.today_min);
+            } else {
+                tomorrowData[3] = temperature_tomorrow.getJSONObject("min").getString("celsius") + "℃";
             }
 
             JSONObject day_after_tomorrow = forecasts.getJSONObject(2);
-            String dateLabel_day_after_tomorrow = day_after_tomorrow.getString("dateLabel");
-            String telop_day_after_tomorrow = day_after_tomorrow.getString("telop");
+            dayaftertomorrowData[0] = day_after_tomorrow.getString("dateLabel");
+            dayaftertomorrowData[1] = day_after_tomorrow.getString("telop");
             JSONObject temperature_day_after_tomorrow = day_after_tomorrow.getJSONObject("temperature");
-            String max_day_after_tomorrow = "";
             Object max_day_after_tomorrow_object = temperature_day_after_tomorrow.get("max");
-            if (max_day_after_tomorrow_object == JSONObject.NULL){
-                max_day_after_tomorrow = con.getResources().getString(R.string.today_min);
-            }else{
-                max_day_after_tomorrow = temperature_tomorrow.getJSONObject("min").getString("celsius") + "℃";
+            if (max_day_after_tomorrow_object == JSONObject.NULL) {
+                dayaftertomorrowData[2] = con.getResources().getString(R.string.today_min);
+            } else {
+                dayaftertomorrowData[2] = temperature_tomorrow.getJSONObject("min").getString("celsius") + "℃";
             }
-            String min_day_after_tomorrow = "";
             Object min_day_after_tomorrow_object = temperature_day_after_tomorrow.get("min");
-            if (min_day_after_tomorrow_object == JSONObject.NULL){
-                min_day_after_tomorrow = con.getResources().getString(R.string.today_min);
-            }else{
-                min_day_after_tomorrow = temperature_tomorrow.getJSONObject("min").getString("celsius") + "℃";
+            if (min_day_after_tomorrow_object == JSONObject.NULL) {
+                dayaftertomorrowData[3] = con.getResources().getString(R.string.today_min);
+            } else {
+                dayaftertomorrowData[3] = temperature_tomorrow.getJSONObject("min").getString("celsius") + "℃";
             }
-
-            String prefecture_trans = prefecture;
-            String telop_trans = telop;
-            String telop_tomorrow_trans = telop_tomorrow;
-            String telop_day_after_tomorrow_trans = telop_day_after_tomorrow;
-            String describe_trans = describe;
-            final int [] val = {0};
-            if (selected_id2 !=0) {
-                tc = new TranslateClass(con);
-                cc = new CodesClass(con);
-                progressBar.setMax(100);
-                progressBar.setProgress(val[0]);
-                String url = "https://script.google.com/macros/s/AKfycbzZtvOvf14TaMdRIYzocRcf3mktzGgXvlFvyczo/exec?text=" + prefecture + "&source=ja&target=" + cc.langCode(selected_id2);
-                prefecture_trans = tc.GetTranslateWord(url);
-                Log.d("url", prefecture_trans);
-                val[0] += 20;
-                progressBar.setProgress(val[0]);
-                Log.d("url2", String.valueOf(selected_id2));
-                String url2 = "https://script.google.com/macros/s/AKfycbzZtvOvf14TaMdRIYzocRcf3mktzGgXvlFvyczo/exec?text=" + telop + "&source=ja&target=" + cc.langCode(selected_id2);
-                telop_trans = tc.GetTranslateWord(url2);
-                Log.d("url", telop_trans);
-                val[0] += 20;
-                progressBar.setProgress(val[0]);
-
-                String url3 = "https://script.google.com/macros/s/AKfycbzZtvOvf14TaMdRIYzocRcf3mktzGgXvlFvyczo/exec?text=" + describe + "&source=ja&target=" + cc.langCode(selected_id2);
-                describe_trans = tc.GetTranslateWord(url3);
-                Log.d("url2", describe_trans);
-                val[0] += 20;
-                progressBar.setProgress(val[0]);
-
-                String url4 = "https://script.google.com/macros/s/AKfycbzZtvOvf14TaMdRIYzocRcf3mktzGgXvlFvyczo/exec?text=" + telop_tomorrow + "&source=ja&target=" + cc.langCode(selected_id2);
-                telop_tomorrow_trans = tc.GetTranslateWord(url4);
-                Log.d("url3", telop_tomorrow_trans);
-                val[0] += 20;
-                progressBar.setProgress(val[0]);
-
-                String url5 = "https://script.google.com/macros/s/AKfycbzZtvOvf14TaMdRIYzocRcf3mktzGgXvlFvyczo/exec?text=" + telop_day_after_tomorrow + "&source=ja&target=" + cc.langCode(selected_id2);
-                telop_day_after_tomorrow_trans = tc.GetTranslateWord(url5);
-                Log.d("url3", telop_day_after_tomorrow_trans);
-                val[0] += 20;
-                progressBar.setProgress(val[0]);
-            }
-
-            Handler mainHandler = new Handler(Looper.getMainLooper());
-            String finalMax = max;
-            String finalMax_tomorrow = max_tomorrow;
-            String finalMin_tomorrow = min_tomorrow;
-            String finalMax_day_after_tomorrow = max_day_after_tomorrow;
-            String finalMin_day_after_tomorrow = min_day_after_tomorrow;
-
-            String finalPrefecture_trans = prefecture_trans;
-            String finalTelop_trans = telop_trans;
-            String finalDescribe_trans = describe_trans;
-            String finalTelop_tomorrow_trans = telop_tomorrow_trans;
-            String finalTelop_day_after_tomorrow_trans = telop_day_after_tomorrow_trans;
-            mainHandler.post(() ->runOnUiThread(() ->{
-                for(int i = 0; i<3; i++){
-                    Map<String, Object> weather = new HashMap<>();
-                    String describe_ui = "";
-                    if(i==0){
-                        weather.put("prefecture", finalPrefecture_trans);
-                        weather.put("dateLabel","("+dateLabel+")：");
-                        weather.put("telop", finalTelop_trans);
-                        weather.put("max", finalMax);
-                        weather.put("min",con.getResources().getString(R.string.today_min));
-                        describe_ui = finalDescribe_trans;
-                        weather.put("describe",describe_ui);
-                        WeatherList.add(weather);
-                    }else if (i==1){
-                        weather.put("dateLabel","("+dateLabel_tomorrow+")：");
-                        // prefectureは流用
-                        weather.put("prefecture", finalPrefecture_trans);
-                        weather.put("telop", finalTelop_tomorrow_trans);
-                        weather.put("max", finalMax_tomorrow);
-                        weather.put("min", finalMin_tomorrow);
-                        describe_ui = "";
-                        weather.put("describe",describe_ui);
-                        WeatherList.add(weather);
-
-                    }else{
-                        weather.put("dateLabel","("+dateLabel_day_after_tomorrow+")：");
-                        weather.put("prefecture", finalPrefecture_trans);
-                        weather.put("telop", finalTelop_day_after_tomorrow_trans);
-                        weather.put("max", finalMax_day_after_tomorrow);
-                        weather.put("min", finalMin_day_after_tomorrow);
-                        describe_ui = "";
-                        weather.put("describe",describe_ui);
-                        WeatherList.add(weather);
-
-                        SimpleAdapter adapter = new SimpleAdapter(con,WeatherList,R.layout.row,FROM,TO);
-                        adapter.notifyDataSetChanged();
-                        _ResultWeather.setAdapter(adapter);
-                        progressBar.setVisibility(ProgressBar.INVISIBLE);
-
-                        val[0] = 0;
-                        progressBar.setProgress(val[0]);
-                    }
-                }
-            }));
-
-        }catch (Exception e){
-            Log.e("test",e.getMessage());
+        } catch (JSONException e) {
+            Log.e("eroor_getJSON", e.getMessage());
         }
+        transData = new String[5];
+        /*
+        0...prefecture
+        1...todayTelop
+        2...tomorrowTelop
+        3...dayaftertomorrowTelop
+        4...describe
+         */
+        transData[0] = todayData[0];
+        transData[1] = todayData[2];
+        transData[2] = tomorrowData[1];
+        transData[3] = tomorrowData[1];
+        transData[4] = todayData[4];
+        final int[] val = {0};
+        if (selected_id2 != 0) {
+            tc = new TranslateClass(con);
+            cc = new CodesClass(con);
+            ProgressBar progressBar = (ProgressBar) ((Activity) con).findViewById(R.id.progressbar);
+            progressBar.setMax(100);
+            progressBar.setProgress(val[0]);
+            String url = "https://script.google.com/macros/s/AKfycbzZtvOvf14TaMdRIYzocRcf3mktzGgXvlFvyczo/exec?text=" + todayData[0] + "&source=ja&target=" + cc.langCode(selected_id2);
+            transData[0] = tc.GetTranslateWord(url);
+            Log.d("url", transData[0]);
+            val[0] += 20;
+            progressBar.setProgress(val[0]);
+            Log.d("url2", String.valueOf(selected_id2));
+            String url2 = "https://script.google.com/macros/s/AKfycbzZtvOvf14TaMdRIYzocRcf3mktzGgXvlFvyczo/exec?text=" + todayData[2] + "&source=ja&target=" + cc.langCode(selected_id2);
+            transData[1] = tc.GetTranslateWord(url2);
+            Log.d("url", transData[1]);
+            val[0] += 20;
+            progressBar.setProgress(val[0]);
+
+            String url3 = "https://script.google.com/macros/s/AKfycbzZtvOvf14TaMdRIYzocRcf3mktzGgXvlFvyczo/exec?text=" + todayData[4] + "&source=ja&target=" + cc.langCode(selected_id2);
+            transData[4] = tc.GetTranslateWord(url3);
+            Log.d("url2", transData[4]);
+            val[0] += 20;
+            progressBar.setProgress(val[0]);
+
+            String url4 = "https://script.google.com/macros/s/AKfycbzZtvOvf14TaMdRIYzocRcf3mktzGgXvlFvyczo/exec?text=" + tomorrowData[1] + "&source=ja&target=" + cc.langCode(selected_id2);
+            transData[2] = tc.GetTranslateWord(url4);
+            Log.d("url3", transData[2]);
+            val[0] += 20;
+            progressBar.setProgress(val[0]);
+
+            String url5 = "https://script.google.com/macros/s/AKfycbzZtvOvf14TaMdRIYzocRcf3mktzGgXvlFvyczo/exec?text=" + tomorrowData[1] + "&source=ja&target=" + cc.langCode(selected_id2);
+            transData[3] = tc.GetTranslateWord(url5);
+            Log.d("url3", transData[3]);
+            val[0] += 20;
+            progressBar.setProgress(val[0]);
+        }
+
+        for (int i = 0; i < 3; i++) {
+            Map<String, Object> weather = new HashMap<>();
+            String describe_ui;
+
+            if (i == 0) {
+                weather.put("prefecture", transData[0]);
+                weather.put("dateLabel", "(" + todayData[1] + ")：");
+                weather.put("telop", transData[1]);
+                weather.put("max", todayData[3]);
+                weather.put("min", con.getResources().getString(R.string.today_min));
+                describe_ui = transData[4];
+                weather.put("describe", describe_ui);
+                WeatherList.add(weather);
+            } else if (i == 1) {
+                weather.put("dateLabel", "(" + tomorrowData[0] + ")：");
+                // prefectureは流用
+                weather.put("prefecture", transData[0]);
+                weather.put("telop", transData[2]);
+                weather.put("max", tomorrowData[2]);
+                weather.put("min", tomorrowData[3]);
+                describe_ui = "";
+                weather.put("describe", describe_ui);
+                WeatherList.add(weather);
+
+            } else {
+                weather.put("dateLabel", "(" + dayaftertomorrowData[0] + ")：");
+                weather.put("prefecture", transData[0]);
+                weather.put("telop", transData[3]);
+                weather.put("max", dayaftertomorrowData[2]);
+                weather.put("min", dayaftertomorrowData[3]);
+                describe_ui = "";
+                weather.put("describe", describe_ui);
+                WeatherList.add(weather);
+
+                adapter = new SimpleAdapter(con, WeatherList, R.layout.row, FROM, TO);
+            }
+        }
+        return adapter;
     }
 }

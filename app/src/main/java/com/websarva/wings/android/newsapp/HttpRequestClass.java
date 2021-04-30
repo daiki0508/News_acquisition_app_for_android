@@ -22,9 +22,6 @@ import okhttp3.Response;
 import static java.util.Objects.requireNonNull;
 
 public class HttpRequestClass{
-    private ProgressBar progressBar;
-    private GetJSONWeatherClass gjwc;
-    private GetJSONNewsClass gjnc;
     private String jsonStr;
 
     // APIキー
@@ -32,7 +29,7 @@ public class HttpRequestClass{
 
     HttpRequestClass(Context context){
     }
-    String httpRequest(@NotNull String url, int api_flag,int selected_id2) {
+    String httpRequest(@NotNull String url, int api_flag) {
         // OkHttp3で通信を行う
         OkHttpClient client = new OkHttpClient();
         Request request;

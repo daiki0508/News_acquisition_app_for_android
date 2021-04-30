@@ -29,7 +29,7 @@ import static android.net.Uri.*;
 
 public class NewsAppActivity extends AppCompatActivity {
     // リストフィル―ドの定義
-    protected ListView _ResultNews;
+    private ListView _ResultNews;
     private Uri uri;
     private String url ="";
     private String jsonStr;
@@ -121,7 +121,7 @@ public class NewsAppActivity extends AppCompatActivity {
             executorService.execute(new Runnable() {
                 @Override
                 public void run() {
-                    jsonStr = hrc.httpRequest("https://google-news.p.rapidapi.com/v1/topic_headlines?country="+codes[0]+"&lang="+codes[1]+"&topic="+word,0,0);
+                    jsonStr = hrc.httpRequest("https://google-news.p.rapidapi.com/v1/topic_headlines?country="+codes[0]+"&lang="+codes[1]+"&topic="+word,0);
                     Log.d("test",codes[0]);
                     Log.d("test",codes[1]);
 
