@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -16,19 +17,26 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.SimpleAdapter;
 import android.widget.Spinner;
+
+import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import static android.net.Uri.*;
 
 public class NewsAppActivity extends AppCompatActivity {
     // リストフィル―ドの定義
-    ListView _ResultNews;
+    protected ListView _ResultNews;
     private Uri uri;
     private String url ="";
+    private String jsonStr;
     // 別クラスの定義
     private CodesClass cc;
     private HttpRequestClass hrc;
+    private GetJSONNewsClass gjnc;
     // Intentの定義
     private Intent intent;
     private ProgressBar progressBar;
@@ -49,6 +57,7 @@ public class NewsAppActivity extends AppCompatActivity {
         Context context = getApplicationContext();
         cc = new CodesClass(context);
         hrc = new HttpRequestClass(this);
+        gjnc = new GetJSONNewsClass(this);
 
         progressBar = findViewById(R.id.progressbar);
         progressBar.setVisibility(ProgressBar.INVISIBLE);
@@ -104,16 +113,32 @@ public class NewsAppActivity extends AppCompatActivity {
 
             // 検索用語欄に入力されたら...
         }else{
-            try {
-                // サブクラスHttpRequestClassの独自関数(httpRequest)に処理を飛ばす
-                // 第１引数にURL、第２引数に結果を表示する場所を指定
-                progressBar.setVisibility(ProgressBar.VISIBLE);
-                hrc.httpRequest("https://google-news.p.rapidapi.com/v1/topic_headlines?country="+codes[0]+"&lang="+codes[1]+"&topic="+word,_ResultNews,0,0);
-                Log.d("test",codes[0]);
-                Log.d("test",codes[1]);
-            }catch (Exception e){
-                Log.e("test",e.getMessage());
-            }
+            progressBar.setVisibility(ProgressBar.VISIBLE);
+            // サブクラスHttpRequestClassの独自関数(httpRequest)に処理を飛ばす
+            // 第１引数にURL、第２引数に結果を表示する場所を指定
+            final Handler handler = new Handler();
+            ExecutorService executorService = Executors.newSingleThreadExecutor();
+            executorService.execute(new Runnable() {
+                @Override
+                public void run() {
+                    jsonStr = hrc.httpRequest("https://google-news.p.rapidapi.com/v1/topic_headlines?country="+codes[0]+"&lang="+codes[1]+"&topic="+word,0,0);
+                    Log.d("test",codes[0]);
+                    Log.d("test",codes[1]);
+
+                    SimpleAdapter adapter = gjnc.GetJSONNews(jsonStr);
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            // ListView更新時に内部的通知を行う
+                            adapter.notifyDataSetChanged();
+                            // _ResultNewsにSimpleAdapterを設定
+                            _ResultNews.setAdapter(adapter);
+                            progressBar.setVisibility(ProgressBar.INVISIBLE);
+                        }
+                    });
+                }
+            });
+
         }
     }
 

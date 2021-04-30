@@ -75,7 +75,7 @@ public class WeatherAppActivity extends AppCompatActivity {
             ListView weather_list = findViewById(R.id.weather_list);
             progressBar.setVisibility(ProgressBar.VISIBLE);
 
-            hrc.httpRequest("https://weather.tsukumijima.net/api/forecast?city="+cc.cityCode(selected_id),weather_list,1,selected_id2);
+            hrc.httpRequest("https://weather.tsukumijima.net/api/forecast?city="+cc.cityCode(selected_id),1,selected_id2);
         }catch (Exception e){
             Log.e("test",e.getMessage());
         }
