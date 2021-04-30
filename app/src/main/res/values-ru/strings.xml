@@ -1,14 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Приложение новостей</string>
     <string name="search_conditions_text">Пожалуйста, введите условия поиска</string>
-    <string name="search_conditions1">площадь</string>
-    <string-array name="conditions_area">
-        <item>Россия</item>
-        <item>Америка</item>
-        <item>Китай</item>
-        <item>Корея</item>
-        <item>Япония</item>
-    </string-array>
     <string name="search_conditions2">язык</string>
     <string-array name="conditions_lang">
         <item>русский</item>

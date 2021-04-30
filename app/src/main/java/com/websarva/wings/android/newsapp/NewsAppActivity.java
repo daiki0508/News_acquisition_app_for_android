@@ -14,6 +14,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -61,6 +62,7 @@ public class NewsAppActivity extends AppCompatActivity {
 
         progressBar = findViewById(R.id.progressbar);
         progressBar.setVisibility(ProgressBar.INVISIBLE);
+
     }
 
     // タップした記事のURLを保持し、Dialogを起動する関数に処理を渡す
@@ -93,16 +95,10 @@ public class NewsAppActivity extends AppCompatActivity {
         EditText input = findViewById(R.id.search_conditions3_edit);
         String word = input.getText().toString();
         // プルダウンリストのアイテムを取得
-        Spinner con1_list = findViewById(R.id.search_conditions1_list);
-        String area = (String) con1_list.getSelectedItem();
-        Spinner con2_list = findViewById(R.id.search_conditions2_list);
-        String lang = (String) con2_list.getSelectedItem();
-        String [] codes;
+      //  Spinner con1_list = findViewById(R.id.search_conditions1_list);
+      //  String area = (String) con1_list.getSelectedItem();
         String outputLang = getString(R.string.app_name);
         Log.d("test",outputLang);
-
-        // サブクラスCodesClassのCode関数に処理を渡す
-        codes = cc.Code(outputLang,area,lang);
 
         // 検索用語に何も入力されていなかったら...
         // 言語によって処理を分岐
@@ -121,9 +117,10 @@ public class NewsAppActivity extends AppCompatActivity {
             executorService.execute(new Runnable() {
                 @Override
                 public void run() {
-                    jsonStr = hrc.httpRequest("https://google-news.p.rapidapi.com/v1/topic_headlines?country="+codes[0]+"&lang="+codes[1]+"&topic="+word,0);
-                    Log.d("test",codes[0]);
-                    Log.d("test",codes[1]);
+                    // サブクラスCodesClassのCode関数に処理を渡す
+                   // code = cc.Code(outputLang,lang);
+
+                    jsonStr = hrc.httpRequest("https://contextualwebsearch-websearch-v1.p.rapidapi.com/api/search/NewsSearchAPI?q="+word+"&pageNumber=1&pageSize=10&autoCorrect=true&safeSearch=true&fromPublishedDate=null&toPublishedDate=null",0);
 
                     SimpleAdapter adapter = gjnc.GetJSONNews(jsonStr);
                     handler.post(new Runnable() {

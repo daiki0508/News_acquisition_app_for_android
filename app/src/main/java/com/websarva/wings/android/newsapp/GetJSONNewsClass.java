@@ -8,6 +8,7 @@ import android.util.Log;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.SimpleAdapter;
+import android.widget.Spinner;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -25,9 +26,11 @@ import okhttp3.Request;
 public class GetJSONNewsClass extends NewsAppActivity {
     private final Context con;
     private TranslateClass tc;
+    private CodesClass cc;
     private final String API_Key = "hogehoge";
     private String titles;
     private String words;
+    private String code;
     private SimpleAdapter adapter;
 
     GetJSONNewsClass(Context context) {
@@ -39,7 +42,7 @@ public class GetJSONNewsClass extends NewsAppActivity {
         // ループフラグ
         boolean flag = false;
         // 読み込む記事の数
-        final int ListNum = 6;
+        final int ListNum = 2;
 
         List<Map<String, String>> NewsList = new ArrayList<>();
         ProgressBar progressBar = (ProgressBar) ((Activity)con).findViewById(R.id.progressbar);
@@ -51,21 +54,31 @@ public class GetJSONNewsClass extends NewsAppActivity {
             try {
                 JSONObject rootJSON = new JSONObject(jsonStr);
                 // articlesというキー名の中のJSONを取得
-                JSONArray articlesJSON = rootJSON.getJSONArray("articles");
+                JSONArray articlesJSON = rootJSON.getJSONArray("value");
                 // 一つ格納
                 JSONObject article = articlesJSON.getJSONObject(i);
 
-                titles = "";
-                words = "";
                 // articlesの必要要素を変数に代入
                 tc = new TranslateClass(con);
-                String words_b = "";
                 titles = article.getString("title");
-                words_b = article.getString("link");
-                String url = "https://api-ssl.bitly.com/v3/shorten?access_token=" + API_Key + "&longUrl=" + words_b;
-                Log.d("url", url);
+                words = article.getString("url");
+
+                String url = "https://api-ssl.bitly.com/v3/shorten?access_token=" + API_Key + "&longUrl=" + words;
+                Log.d("url_words", url);
                 words = tc.GetShortenedUrl(url);
                 Log.d("test_words",words);
+
+                Spinner con2_list = (Spinner) ((Activity)con).findViewById(R.id.search_conditions2_list);
+                String lang = (String) con2_list.getSelectedItem();
+                String outputLang = (String)((Activity)con).getString(R.string.app_name);
+
+                cc = new CodesClass(con);
+                code = cc.Code(outputLang,lang);
+                url = "https://script.google.com/macros/s/AKfycbzZtvOvf14TaMdRIYzocRcf3mktzGgXvlFvyczo/exec?text=" + titles + "&source=en&target=" + code;
+                Log.d("test_code",code);
+                Log.d("url_titles",url);
+                titles = tc.GetTranslateWord(url);
+                Log.d("test_titles",titles);
                 val[0] += 100 / ListNum;
                 progressBar.setProgress(val[0]);
 
@@ -81,14 +94,14 @@ public class GetJSONNewsClass extends NewsAppActivity {
             boolean finalFlag = flag;
             Map<String, String> news = new HashMap<>();
             news.put("title", titles);
-            news.put("link", words);
+            news.put("url", words);
             NewsList.add(news);
 
             if (finalFlag){
                     val[0] = 100 - val[0];
                     progressBar.setProgress(val[0]);
                 // SimpleAdapterの第４引数を定義
-                String[] from = {"title", "link"};
+                String[] from = {"title", "url"};
                 // SimpleAdapterの第５引数を定義
                 int[] to = {android.R.id.text1, android.R.id.text2};
                 // SimpleAdapterを生成

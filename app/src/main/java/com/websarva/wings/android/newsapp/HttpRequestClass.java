@@ -39,7 +39,7 @@ public class HttpRequestClass{
                 request = new Request.Builder()
                         .url(url)
                         .get()
-                        .addHeader("x-rapidapi-host", "google-news.p.rapidapi.com")
+                        .addHeader("x-rapidapi-host", "contextualwebsearch-websearch-v1.p.rapidapi.com")
                         .addHeader("x-rapidapi-key", YOUR_API_KEY)
                         .build();
 
