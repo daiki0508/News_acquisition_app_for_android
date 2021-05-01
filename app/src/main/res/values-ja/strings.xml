@@ -26,6 +26,7 @@
 
     <string name="NewsScreen">ニュース</string>
     <string name="WeatherScreen">天気</string>
+    <string name="LicenseScreen">ライセンス</string>
     <string name="weather_text_introduction">天気情報を取得できます</string>
     <string-array name="prefectures">
         <item>北海道</item>

@@ -26,6 +26,7 @@
 
     <string name="NewsScreen">消息</string>
     <string name="WeatherScreen" >天气</string>
+    <string name="LicenseScreen">执照</string>
     <string name="weather_text_introduction">您可以获得天气信息</string>
 
     <string-array name="prefectures">

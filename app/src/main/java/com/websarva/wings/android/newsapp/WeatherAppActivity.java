@@ -135,11 +135,17 @@ public class WeatherAppActivity extends AppCompatActivity {
         // itemIDを取得
         int itemId = item.getItemId();
         // Newsが選択された場合のみIntentする。
+
         if (itemId == R.id.NewsScreen){
             intent = new Intent(WeatherAppActivity.this,NewsAppActivity.class);
             startActivity(intent);
             finish();
+        }else if (itemId == R.id.LicenseScreen){
+            intent = new Intent(this,ViewLicenseActivity.class);
+            startActivity(intent);
+            finish();
         }
+
         return super.onOptionsItemSelected(item);
     }
 }

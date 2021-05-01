@@ -26,6 +26,7 @@
 
     <string name="NewsScreen">Новости</string>
     <string name="WeatherScreen" >Погода</string>
+    <string name="LicenseScreen">Лицензия</string>
     <string name="weather_text_introduction">Вы можете получить информацию о погоде</string>
 
     <string-array name="prefectures">

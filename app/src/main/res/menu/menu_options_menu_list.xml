@@ -10,4 +10,8 @@
         android:id="@+id/WeatherScreen"
         app:showAsAction="never"
         android:title="@string/WeatherScreen" />
+    <item
+        android:id="@+id/LicenseScreen"
+        app:showAsAction="never"
+        android:title="@string/LicenseScreen" />
 </menu>

@@ -25,7 +25,8 @@
     <string name="playStore_url" translatable="false" tools:ignore="ExtraTranslation">http://play.google.com/store/apps/details?id=com.twitter.android</string>
 
     <string name="NewsScreen">News</string>
-    <string name="WeatherScreen" >Weather</string>
+    <string name="WeatherScreen">Weather</string>
+    <string name="LicenseScreen">Licence</string>
     <string name="weather_text_introduction">You can get the weather information.</string>
     <string-array name="prefectures">
         <item>Hokkaido</item>

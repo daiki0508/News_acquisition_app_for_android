@@ -161,11 +161,17 @@ public class NewsAppActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         int itemId = item.getItemId();
+
         if (itemId == R.id.WeatherScreen){
             intent = new Intent(NewsAppActivity.this,WeatherAppActivity.class);
             startActivity(intent);
             finish();
+        }else if (itemId == R.id.LicenseScreen){
+            intent = new Intent(this,ViewLicenseActivity.class);
+            startActivity(intent);
+            finish();
         }
+
         return super.onOptionsItemSelected(item);
     }
 }
