@@ -1,6 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">NewsApp</string>
     <string name="search_conditions_text">Please enter search conditions</string>
+    <string name="search_conditions1">Area</string>
     <string name="search_conditions2">Language</string>
     <string-array name="conditions_lang">
         <item>English</item>

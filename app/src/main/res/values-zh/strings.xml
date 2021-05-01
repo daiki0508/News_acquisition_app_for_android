@@ -1,6 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">新闻应用</string>
     <string name="search_conditions_text">请输入搜索条件</string>
+    <string name="search_conditions1">区</string>
     <string name="search_conditions2">语言</string>
     <string-array name="conditions_lang">
         <item>中文</item>

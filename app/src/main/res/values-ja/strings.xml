@@ -1,7 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">ニュースアプリ</string>
     <string name="search_conditions_text">検索条件を入力して下さい</string>
-
+    <string name="search_conditions1">地域</string>
     <string name="search_conditions2">言語</string>
     <string-array name="conditions_lang">
         <item>日本語</item>

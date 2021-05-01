@@ -1,6 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">뉴스 애플 리케이션</string>
     <string name="search_conditions_text">검색 조건을 입력하십시오</string>
+    <string name="search_conditions1">지역</string>
     <string name="search_conditions2">언어</string>
     <string-array name="conditions_lang">
         <item>한국</item>

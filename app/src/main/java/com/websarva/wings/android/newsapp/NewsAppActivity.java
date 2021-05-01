@@ -34,6 +34,10 @@ public class NewsAppActivity extends AppCompatActivity {
     private Uri uri;
     private String url ="";
     private String jsonStr;
+   /* private String src_e;
+    private String sec_e;
+    private String iv_e;*/
+    private String[] aes_data;
     // 別クラスの定義
     private CodesClass cc;
     private HttpRequestClass hrc;
@@ -120,7 +124,13 @@ public class NewsAppActivity extends AppCompatActivity {
                     // サブクラスCodesClassのCode関数に処理を渡す
                    // code = cc.Code(outputLang,lang);
 
-                    jsonStr = hrc.httpRequest("https://contextualwebsearch-websearch-v1.p.rapidapi.com/api/search/NewsSearchAPI?q="+word+"&pageNumber=1&pageSize=10&autoCorrect=true&safeSearch=true&fromPublishedDate=null&toPublishedDate=null",0);
+                   // jsonStr = hrc.httpRequest("https://contextualwebsearch-websearch-v1.p.rapidapi.com/api/search/NewsSearchAPI?q="+word+"&pageNumber=1&pageSize=10&autoCorrect=true&safeSearch=true&fromPublishedDate=null&toPublishedDate=null",0);
+                    aes_data = new String[3];
+                    aes_data[0] = "IhS1F0FNEbRrhsUEtQbu3k3j3mEzgM67P+YHcxLbbbfFYf30qEO1YCcB/h3k+7IpZUmz24o0Nv+2t0J8Z05jWg==";
+                    aes_data[1] = "dlZyN0dEbW1xTWtDWUhKZA==";
+                    aes_data[2] = "aVPbUQDZZ7gJ2y5452rY9w==";
+
+                    jsonStr = hrc.httpRequest(aes_data,null,0);
 
                     SimpleAdapter adapter = gjnc.GetJSONNews(jsonStr);
                     handler.post(new Runnable() {

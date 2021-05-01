@@ -88,7 +88,7 @@ public class WeatherAppActivity extends AppCompatActivity {
             executorService.execute(new Runnable() {
                 @Override
                 public void run() {
-                    jsonStr = hrc.httpRequest("https://weather.tsukumijima.net/api/forecast?city="+cc.cityCode(selected_id),1);
+                    jsonStr = hrc.httpRequest(null,"https://weather.tsukumijima.net/api/forecast?city="+cc.cityCode(selected_id),1);
 
                     SimpleAdapter adapter = gjwc.GetJSONWeather(jsonStr,selected_id2);
 
