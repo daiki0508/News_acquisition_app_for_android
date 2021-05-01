@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.webkit.WebView;
 
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
@@ -66,6 +67,13 @@ public class ViewLicenseActivity extends AppCompatActivity {
         webView.getSettings().setAllowContentAccess(false);
 
         webView.loadUrl(result);
+
+        // カギ関連の情報をメモリから削除
+        Arrays.fill(bytes,(byte) 0);
+        Arrays.fill(keys,(byte) 0);
+        Arrays.fill(iv_decode,(byte) 0);
+        Arrays.fill(en2,(byte) 0);
+        result = "";
     }
 
     @Override
