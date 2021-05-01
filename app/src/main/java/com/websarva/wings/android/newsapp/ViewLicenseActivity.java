@@ -82,6 +82,7 @@ public class ViewLicenseActivity extends AppCompatActivity {
         // Newsが選択された場合のみIntentする。
         Intent intent;
 
+        // NewsとWeatherが選択された場合のみIntentする
         if (itemId == R.id.NewsScreen){
             intent = new Intent(this,NewsAppActivity.class);
             startActivity(intent);

@@ -160,8 +160,10 @@ public class NewsAppActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
+        // itemIDを取得
         int itemId = item.getItemId();
 
+        // WeatherとLicenseが選択された場合のみIntentする。
         if (itemId == R.id.WeatherScreen){
             intent = new Intent(NewsAppActivity.this,WeatherAppActivity.class);
             startActivity(intent);

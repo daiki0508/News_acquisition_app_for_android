@@ -15,14 +15,15 @@
         android:theme="@style/Theme.NewsApp"
         android:usesCleartextTraffic="false"
         tools:ignore="HardcodedDebugMode">
-        <activity android:name=".ViewLicenseActivity"></activity>
+        <activity android:name=".ViewLicenseActivity"
+            android:exported="false" />
         <activity
             android:name=".WeatherAppActivity"
-            android:exported="false"></activity>
+            android:exported="false" />
         <activity
             android:name=".ShareTwitterActivity"
             android:exported="false"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".NewsAppActivity"
             android:screenOrientation="portrait">
