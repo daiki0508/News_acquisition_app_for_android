@@ -2,38 +2,35 @@ package com.websarva.wings.android.newsapp;
 
 import android.app.Activity;
 import android.content.Context;
-import android.os.Handler;
 import android.util.Base64;
 import android.util.Log;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.ProgressBar;
 
-import org.jetbrains.annotations.NotNull;
-import org.json.JSONException;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
-import okhttp3.Call;
-import okhttp3.Callback;
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-import static java.util.Objects.requireNonNull;
 
 public class HttpRequestClass extends NewsAppActivity{
+    // コンテキストフィールド
     private final Context con;
+
+    // ProgressBarフィールド
+    private ProgressBar progressBar;
+
+    // AES関連のフィールド
     private String jsonStr;
     private byte[] iv_decode = null;
     private byte[] en2 = null;
@@ -42,18 +39,23 @@ public class HttpRequestClass extends NewsAppActivity{
     private byte[] keys = null;
     private String result;
 
-    // APIキー
-    //private final static String YOUR_API_KEY = "hogehoge";
 
     HttpRequestClass(Context context){
         this.con = context;
     }
 
     String httpRequest(String[] aes_data, String url,int api_flag) {
+        // コンテキストからNewsAppActivityのProgressBarを取得
+        progressBar = (ProgressBar) ((Activity)con).findViewById(R.id.progressbar);
+        final int[] val = {0};
+        progressBar.setMax(100);
+        progressBar.setProgress(val[0]);
+
         // OkHttp3で通信を行う
         OkHttpClient client = new OkHttpClient();
         Request request;
         if (api_flag == 0) {
+            // AES復号開始
             bytes = new byte[256 / 8];
             keys = Base64.decode(aes_data[1],Base64.DEFAULT);
 
@@ -75,36 +77,39 @@ public class HttpRequestClass extends NewsAppActivity{
 
                 result = new String(en2,StandardCharsets.US_ASCII);
             }catch (Exception e){
-                Log.e("eroor_decode",e.getMessage());
+               // Log.e("eroor_decode",e.getMessage());
             }
 
+            val[0] += 25;
+            progressBar.setProgress(val[0]);
+
+            // コンテキストからNewsAPPActivityのEditTextを取得
             EditText editText = (EditText) ((Activity)con).findViewById(R.id.search_conditions3_edit);
             String word = editText.getText().toString();
-            Log.d("web_word",word);
+           // Log.d("web_word",word);
 
+            // POSTリクエストパラメータの設定
             RequestBody formBody = new FormBody.Builder()
                     .add("word",word)
                     .build();
 
             try {
-                //  gjnc = new GetJSONNewsClass(con);
                 request = new Request.Builder()
                         .url(result)
                         .post(formBody)
-                        //.get()
-                       // .addHeader("x-rapidapi-host", "contextualwebsearch-websearch-v1.p.rapidapi.com")
-                       // .addHeader("x-rapidapi-key", YOUR_API_KEY)
                         .build();
 
-                //  progressBar = (ProgressBar) ((com.websarva.wings.android.newsapp.NewsAppActivity) con).findViewById(R.id.progressbar);
-
                 Response response = client.newCall(request).execute();
+                // JSON取得
                 jsonStr = response.body().string();
-                //     gjnc.GetJSONNews(_ResultList, jsonStr, progressBar);
+
+                val[0] += 25;
+                progressBar.setProgress(val[0]);
             } catch (IOException e) {
-                Log.e("eroor_news", e.getMessage());
+               // Log.e("eroor_news", e.getMessage());
             }
 
+            // カギ関連のデータをメモリから削除
             Arrays.fill(bytes,(byte) 0);
             Arrays.fill(keys,(byte) 0);
             Arrays.fill(iv_decode,(byte) 0);
@@ -113,43 +118,18 @@ public class HttpRequestClass extends NewsAppActivity{
 
         } else {
             try {
-                //    gjwc = new GetJSONWeatherClass(con);
                 request = new Request.Builder()
                         .url(url)
                         .get()
                         .build();
 
-                //     progressBar = (ProgressBar) ((com.websarva.wings.android.newsapp.WeatherAppActivity) con).findViewById(R.id.progressbar);
                 Response response = client.newCall(request).execute();
+                // JSON取得
                 jsonStr = response.body().string();
             } catch (IOException e) {
-                Log.e("eroor_news", e.getMessage());
+               // Log.e("eroor_news", e.getMessage());
             }
         }
-
-
-        // 非同期処理
-        /*client.newCall(requireNonNull(request))
-                .enqueue(new Callback() {
-                    // 失敗時の処理
-                    @Override
-                    public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                        Log.e("test", e.getMessage());
-                    }
-
-                    // 成功時の処理
-                    // レスポンスデータを処理
-                    @Override
-                    public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                        // JSONデータを取得する
-                        final String jsonStr = requireNonNull(response.body()).string();
-                        if (api_flag == 0) {
-                            gjnc.GetJSONNews(_ResultList, jsonStr,progressBar);
-                        } else {
-                            gjwc.GetJSONWeather(jsonStr,_ResultList,progressBar,selected_id2);
-                        }
-                    }
-                });*/
 
         return jsonStr;
     }

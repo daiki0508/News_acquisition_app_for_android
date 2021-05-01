@@ -14,14 +14,13 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.SimpleAdapter;
-import android.widget.Spinner;
 
-import java.util.List;
+
+
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -34,9 +33,6 @@ public class NewsAppActivity extends AppCompatActivity {
     private Uri uri;
     private String url ="";
     private String jsonStr;
-   /* private String src_e;
-    private String sec_e;
-    private String iv_e;*/
     private String[] aes_data;
     // 別クラスの定義
     private CodesClass cc;
@@ -64,6 +60,7 @@ public class NewsAppActivity extends AppCompatActivity {
         hrc = new HttpRequestClass(this);
         gjnc = new GetJSONNewsClass(this);
 
+        // ProgressBarの初期化
         progressBar = findViewById(R.id.progressbar);
         progressBar.setVisibility(ProgressBar.INVISIBLE);
 
@@ -74,7 +71,7 @@ public class NewsAppActivity extends AppCompatActivity {
         @Override
         public void onItemClick(AdapterView<?>parent, View view, int position, long id){
             Map<String,String> urlStr = (Map<String, String>) parent.getItemAtPosition(position);
-            url = urlStr.get("link");
+            url = urlStr.get("url");
             uri = parse(url);
             SelectDialogFragment dialogFragment = new SelectDialogFragment();
             dialogFragment.show(getSupportFragmentManager(),"SelectDialogFragment");
@@ -83,7 +80,7 @@ public class NewsAppActivity extends AppCompatActivity {
 
     // SelectDialogFragmentクラスで渡された結果が格納される
     public void onFragmentResult(boolean selectFlag){
-        Log.d("test3", String.valueOf(selectFlag));
+      //  Log.d("test3", String.valueOf(selectFlag));
         // flagの値によって処理を分岐
         if (selectFlag){
             intent = new Intent(Intent.ACTION_VIEW, uri);
@@ -98,11 +95,9 @@ public class NewsAppActivity extends AppCompatActivity {
     public void executeButton(View view){
         EditText input = findViewById(R.id.search_conditions3_edit);
         String word = input.getText().toString();
-        // プルダウンリストのアイテムを取得
-      //  Spinner con1_list = findViewById(R.id.search_conditions1_list);
-      //  String area = (String) con1_list.getSelectedItem();
+
         String outputLang = getString(R.string.app_name);
-        Log.d("test",outputLang);
+      //  Log.d("test",outputLang);
 
         // 検索用語に何も入力されていなかったら...
         // 言語によって処理を分岐
@@ -121,10 +116,13 @@ public class NewsAppActivity extends AppCompatActivity {
             executorService.execute(new Runnable() {
                 @Override
                 public void run() {
-                    // サブクラスCodesClassのCode関数に処理を渡す
-                   // code = cc.Code(outputLang,lang);
+                    // バッググラウンド処理
+                    /*
+                    aes_data[0]...エンコードデータ
+                    aes_data[1]...秘密鍵
+                    aes_data[2]...iv
+                     */
 
-                   // jsonStr = hrc.httpRequest("https://contextualwebsearch-websearch-v1.p.rapidapi.com/api/search/NewsSearchAPI?q="+word+"&pageNumber=1&pageSize=10&autoCorrect=true&safeSearch=true&fromPublishedDate=null&toPublishedDate=null",0);
                     aes_data = new String[3];
                     aes_data[0] = "IhS1F0FNEbRrhsUEtQbu3k3j3mEzgM67P+YHcxLbbbfFYf30qEO1YCcB/h3k+7IpZUmz24o0Nv+2t0J8Z05jWg==";
                     aes_data[1] = "dlZyN0dEbW1xTWtDWUhKZA==";
@@ -136,6 +134,7 @@ public class NewsAppActivity extends AppCompatActivity {
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
+                            // UI更新処理
                             // ListView更新時に内部的通知を行う
                             adapter.notifyDataSetChanged();
                             // _ResultNewsにSimpleAdapterを設定

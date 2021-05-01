@@ -21,9 +21,12 @@ import java.util.List;
 import java.util.Map;
 
 public class GetJSONWeatherClass extends WeatherAppActivity {
+    // コンテキストの定義
     private final Context con;
+    // 他クラスのコンテキストの定義
     private TranslateClass tc;
     private CodesClass cc;
+    // その他
     private String[] todayData;
     private String[] tomorrowData;
     private String[] dayaftertomorrowData;
@@ -35,34 +38,46 @@ public class GetJSONWeatherClass extends WeatherAppActivity {
     }
 
     SimpleAdapter GetJSONWeather(final String jsonStr, int selected_id2) {
-        Log.d("test", jsonStr);
+       // Log.d("test", jsonStr);
+        // SimpleAdapterの第４引数の設定
         final String[] FROM = {"prefecture", "dateLabel", "telop", "max", "min", "describe"};
+
+        // 今日の天気の格納するためのフィールドの初期化
         todayData = new String[5];
+        // 明日の天気情報を取得するためのフィールドの初期化
         tomorrowData = new String[4];
+        // 明後日の天気情報を取得するためのフィールドの初期化
         dayaftertomorrowData = new String[4];
+
+        // SimpleAdapterの第５引数の設定
         final int[] TO = {R.id.get_prefecture, R.id.dateLabel, R.id.today_telop, R.id.today_max, R.id.today_min, R.id.weather_describe};
         List<Map<String, Object>> WeatherList = new ArrayList<>();
 
         try {
+            // 今日の天気のJSON処理
             JSONObject rootJSON = new JSONObject(jsonStr);
             JSONArray forecasts = rootJSON.getJSONArray("forecasts");
             JSONObject today = forecasts.getJSONObject(0);
             todayData[1] = today.getString("dateLabel");
             todayData[2] = today.getString("telop");
             JSONObject temperature = today.getJSONObject("temperature");
+
             Object max_object = temperature.get("max");
             if (max_object == JSONObject.NULL) {
                 todayData[3] = con.getResources().getString(R.string.today_min);
             } else {
                 todayData[3] = temperature.getJSONObject("max").getString("celsius") + "℃";
             }
+
             todayData[4] = rootJSON.getJSONObject("description").getString("text");
             todayData[0] = rootJSON.getJSONObject("location").getString("prefecture");
 
+            // 明日の天気情報のJSON処理
             JSONObject tomorrow = forecasts.getJSONObject(1);
             tomorrowData[0] = tomorrow.getString("dateLabel");
             tomorrowData[1] = tomorrow.getString("telop");
             JSONObject temperature_tomorrow = tomorrow.getJSONObject("temperature");
+
             Object max_tomorrow_object = temperature_tomorrow.get("max");
             if (max_tomorrow_object == JSONObject.NULL) {
                 tomorrowData[2] = con.getResources().getString(R.string.today_min);
@@ -76,10 +91,12 @@ public class GetJSONWeatherClass extends WeatherAppActivity {
                 tomorrowData[3] = temperature_tomorrow.getJSONObject("min").getString("celsius") + "℃";
             }
 
+            // 明後日の天気情報のJSON処理
             JSONObject day_after_tomorrow = forecasts.getJSONObject(2);
             dayaftertomorrowData[0] = day_after_tomorrow.getString("dateLabel");
             dayaftertomorrowData[1] = day_after_tomorrow.getString("telop");
             JSONObject temperature_day_after_tomorrow = day_after_tomorrow.getJSONObject("temperature");
+
             Object max_day_after_tomorrow_object = temperature_day_after_tomorrow.get("max");
             if (max_day_after_tomorrow_object == JSONObject.NULL) {
                 dayaftertomorrowData[2] = con.getResources().getString(R.string.today_min);
@@ -93,8 +110,9 @@ public class GetJSONWeatherClass extends WeatherAppActivity {
                 dayaftertomorrowData[3] = temperature_tomorrow.getJSONObject("min").getString("celsius") + "℃";
             }
         } catch (JSONException e) {
-            Log.e("eroor_getJSON", e.getMessage());
+          //  Log.e("eroor_getJSON", e.getMessage());
         }
+
         transData = new String[5];
         /*
         0...prefecture
@@ -108,49 +126,57 @@ public class GetJSONWeatherClass extends WeatherAppActivity {
         transData[2] = tomorrowData[1];
         transData[3] = tomorrowData[1];
         transData[4] = todayData[4];
+
         final int[] val = {0};
+
         if (selected_id2 != 0) {
+            // 翻訳処理開始
             tc = new TranslateClass(con);
             cc = new CodesClass(con);
+
             ProgressBar progressBar = (ProgressBar) ((Activity) con).findViewById(R.id.progressbar);
             progressBar.setMax(100);
             progressBar.setProgress(val[0]);
+
             String url = "https://script.google.com/macros/s/AKfycbzZtvOvf14TaMdRIYzocRcf3mktzGgXvlFvyczo/exec?text=" + todayData[0] + "&source=ja&target=" + cc.langCode(selected_id2);
             transData[0] = tc.GetTranslateWord(url);
-            Log.d("url", transData[0]);
+           // Log.d("url", transData[0]);
             val[0] += 20;
             progressBar.setProgress(val[0]);
-            Log.d("url2", String.valueOf(selected_id2));
+           // Log.d("url2", String.valueOf(selected_id2));
+
             String url2 = "https://script.google.com/macros/s/AKfycbzZtvOvf14TaMdRIYzocRcf3mktzGgXvlFvyczo/exec?text=" + todayData[2] + "&source=ja&target=" + cc.langCode(selected_id2);
             transData[1] = tc.GetTranslateWord(url2);
-            Log.d("url", transData[1]);
+           // Log.d("url", transData[1]);
             val[0] += 20;
             progressBar.setProgress(val[0]);
 
             String url3 = "https://script.google.com/macros/s/AKfycbzZtvOvf14TaMdRIYzocRcf3mktzGgXvlFvyczo/exec?text=" + todayData[4] + "&source=ja&target=" + cc.langCode(selected_id2);
             transData[4] = tc.GetTranslateWord(url3);
-            Log.d("url2", transData[4]);
+           // Log.d("url2", transData[4]);
             val[0] += 20;
             progressBar.setProgress(val[0]);
 
             String url4 = "https://script.google.com/macros/s/AKfycbzZtvOvf14TaMdRIYzocRcf3mktzGgXvlFvyczo/exec?text=" + tomorrowData[1] + "&source=ja&target=" + cc.langCode(selected_id2);
             transData[2] = tc.GetTranslateWord(url4);
-            Log.d("url3", transData[2]);
+          //  Log.d("url3", transData[2]);
             val[0] += 20;
             progressBar.setProgress(val[0]);
 
             String url5 = "https://script.google.com/macros/s/AKfycbzZtvOvf14TaMdRIYzocRcf3mktzGgXvlFvyczo/exec?text=" + tomorrowData[1] + "&source=ja&target=" + cc.langCode(selected_id2);
             transData[3] = tc.GetTranslateWord(url5);
-            Log.d("url3", transData[3]);
+          //  Log.d("url3", transData[3]);
             val[0] += 20;
             progressBar.setProgress(val[0]);
         }
 
+        // 翻訳後のデータ等をセットする
         for (int i = 0; i < 3; i++) {
             Map<String, Object> weather = new HashMap<>();
             String describe_ui;
 
             if (i == 0) {
+                // 今日
                 weather.put("prefecture", transData[0]);
                 weather.put("dateLabel", "(" + todayData[1] + ")：");
                 weather.put("telop", transData[1]);
@@ -160,6 +186,7 @@ public class GetJSONWeatherClass extends WeatherAppActivity {
                 weather.put("describe", describe_ui);
                 WeatherList.add(weather);
             } else if (i == 1) {
+                // 明日
                 weather.put("dateLabel", "(" + tomorrowData[0] + ")：");
                 // prefectureは流用
                 weather.put("prefecture", transData[0]);
@@ -171,6 +198,7 @@ public class GetJSONWeatherClass extends WeatherAppActivity {
                 WeatherList.add(weather);
 
             } else {
+                // 明後日
                 weather.put("dateLabel", "(" + dayaftertomorrowData[0] + ")：");
                 weather.put("prefecture", transData[0]);
                 weather.put("telop", transData[3]);

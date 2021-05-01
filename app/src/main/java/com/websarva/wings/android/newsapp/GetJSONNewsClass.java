@@ -2,11 +2,8 @@ package com.websarva.wings.android.newsapp;
 
 import android.app.Activity;
 import android.content.Context;
-import android.os.Handler;
-import android.os.Looper;
 import android.util.Base64;
 import android.util.Log;
-import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.SimpleAdapter;
 import android.widget.Spinner;
@@ -15,7 +12,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -27,14 +23,14 @@ import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
 
 public class GetJSONNewsClass extends NewsAppActivity {
+    // コンテキストフィールドの定義
     private final Context con;
+    // 他クラスのコンテキスト
     private TranslateClass tc;
     private CodesClass cc;
-   // private final String API_Key = "hogehoge";
+    // AES関連のフィールド
     private String[] aes_data;
     private byte[] iv_decode = null;
     private byte[] en2 = null;
@@ -42,6 +38,7 @@ public class GetJSONNewsClass extends NewsAppActivity {
     private byte[] bytes =null;
     private byte[] keys = null;
     private String result;
+    // その他
     private String titles;
     private String words;
     private String code;
@@ -56,20 +53,24 @@ public class GetJSONNewsClass extends NewsAppActivity {
         // ループフラグ
         boolean flag = false;
         // 読み込む記事の数
-        final int ListNum = 2;
+        final int ListNum = 10;
 
         List<Map<String, String>> NewsList = new ArrayList<>();
+        // コンテキストからProgressBarを取得
         ProgressBar progressBar = (ProgressBar) ((Activity)con).findViewById(R.id.progressbar);
-        Log.d("test", "jsonStr=" + jsonStr);
-        final int[] val = {0};
-        progressBar.setMax(100);
-        progressBar.setProgress(val[0]);
+       // Log.d("test", "jsonStr=" + jsonStr);
+        final int[] val = {50};
 
+        // AESデータのセット
+        /*
+        詳しくはNewsAppActivityを参照
+         */
         aes_data = new String[3];
         aes_data[0] = "zJ9nWF3rN5JRix6S9+8D1Z39Z36ii1QosF1RxlcgoerghVyorvbjilX13IW6546CT/8nTjwhgod9xNxZyfEyew==";
         aes_data[1] = "RU43Q2FITG5lUHI0OGh2NQ==";
         aes_data[2] = "BWU2HjGaG0YHsJOMT6W5XA==";
 
+        // AES復号開始
         bytes = new byte[256 / 8];
         keys = Base64.decode(aes_data[1],Base64.DEFAULT);
 
@@ -91,7 +92,7 @@ public class GetJSONNewsClass extends NewsAppActivity {
 
             result = new String(en2,StandardCharsets.US_ASCII);
         }catch (Exception e){
-            Log.e("eroor_decode",e.getMessage());
+           // Log.e("eroor_decode",e.getMessage());
         }
 
         for (int i = 0; i < ListNum; i++) {
@@ -107,23 +108,33 @@ public class GetJSONNewsClass extends NewsAppActivity {
                 titles = article.getString("title");
                 words = article.getString("url");
 
-               // String url = "https://api-ssl.bitly.com/v3/shorten?access_token=" + API_Key + "&longUrl=" + words;
-                Log.d("url_words", result);
+             //   Log.d("url_words", result);
+                // 短縮URL関数に処理を飛ばす
                 words = tc.GetShortenedUrl(result,words);
-                Log.d("test_words",words);
+              //  Log.d("test_words",words);
 
+                // コンテキストからそれぞれのフィールドを取得
+                /*
+                con2_list...スピナー
+                lang...変換言語
+                outputLang...アプリの言語を取得
+                 */
                 Spinner con2_list = (Spinner) ((Activity)con).findViewById(R.id.search_conditions2_list);
                 String lang = (String) con2_list.getSelectedItem();
                 String outputLang = (String)((Activity)con).getString(R.string.app_name);
 
+                // codeを取得するための関数へ飛ばす
                 cc = new CodesClass(con);
                 code = cc.Code(outputLang,lang);
+
                 String url = "https://script.google.com/macros/s/AKfycbzZtvOvf14TaMdRIYzocRcf3mktzGgXvlFvyczo/exec?text=" + titles + "&source=en&target=" + code;
-                Log.d("test_code",code);
-                Log.d("url_titles",url);
+               // Log.d("test_code",code);
+               // Log.d("url_titles",url);
+                // 翻訳開始
                 titles = tc.GetTranslateWord(url);
-                Log.d("test_titles",titles);
-                val[0] += 100 / ListNum;
+              //  Log.d("test_titles",titles);
+
+                val[0] += 50 / ListNum;
                 progressBar.setProgress(val[0]);
 
                 // ループ最後の処理のみflagをtrueにする
@@ -131,7 +142,7 @@ public class GetJSONNewsClass extends NewsAppActivity {
                     flag = true;
                 }
             } catch (JSONException e) {
-                Log.e("eroor_getJSON", e.getMessage());
+              //  Log.e("eroor_getJSON", e.getMessage());
             }
 
             // UIスレッドを操作の準備
@@ -142,13 +153,14 @@ public class GetJSONNewsClass extends NewsAppActivity {
             NewsList.add(news);
 
             if (finalFlag){
+                // AESのカギ情報をメモリから削除
                 Arrays.fill(bytes, (byte) 0);
                 Arrays.fill(keys, (byte) 0);
                 Arrays.fill(iv_decode, (byte) 0);
                 Arrays.fill(en2, (byte) 0);
                 result = "";
 
-                val[0] = 100 - val[0];
+                val[0] = 50 - val[0];
                 progressBar.setProgress(val[0]);
                 // SimpleAdapterの第４引数を定義
                 String[] from = {"title", "url"};
