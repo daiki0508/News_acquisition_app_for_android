@@ -109,6 +109,7 @@ public class GetJSONNewsClass extends NewsAppActivity {
                 words = article.getString("url");
 
              //   Log.d("url_words", result);
+              //  Log.d("test_titles",titles);
                 // 短縮URL関数に処理を飛ばす
                 words = tc.GetShortenedUrl(result,words);
               //  Log.d("test_words",words);
@@ -127,12 +128,15 @@ public class GetJSONNewsClass extends NewsAppActivity {
                 cc = new CodesClass(con);
                 code = cc.Code(outputLang,lang);
 
-                String url = "https://script.google.com/macros/s/AKfycbzZtvOvf14TaMdRIYzocRcf3mktzGgXvlFvyczo/exec?text=" + titles + "&source=en&target=" + code;
-               // Log.d("test_code",code);
-               // Log.d("url_titles",url);
-                // 翻訳開始
-                titles = tc.GetTranslateWord(url);
-              //  Log.d("test_titles",titles);
+                // codeの戻り値がenじゃなければ翻訳する
+                if (!code.equals("en")){
+                    String url = "https://script.google.com/macros/s/AKfycbzZtvOvf14TaMdRIYzocRcf3mktzGgXvlFvyczo/exec?text=" + titles + "&source=en&target=" + code;
+                    // Log.d("test_code",code);
+                    // Log.d("url_titles",url);
+                    // 翻訳開始
+                    titles = tc.GetTranslateWord(url);
+                   // Log.d("test_titles",titles);
+                }
 
                 val[0] += 50 / ListNum;
                 progressBar.setProgress(val[0]);
